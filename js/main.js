@@ -12,6 +12,8 @@ const alto = 3;
 
 //selecting place
 let estado = 'selecting';
+let from = '';
+let to = '';
 
 botonIniciar.addEventListener('click', async () => {
   estadoInput.value = 'leyendo';
@@ -31,8 +33,16 @@ botonIniciar.addEventListener('click', async () => {
       if (cadenaCompleta(cadena)) {
         if (tieneCero(cadena)) {
           const cadenaLimpia = cadena.replace('f', '');
-          moverPieza(cadenaLimpia);
-          // board.move('e2-e4')
+          const chessCoords = cadenaToChessCoords(cadenaLimpia);
+
+          if (estado == 'selecting') {
+            from = chessCoords;
+            estado = 'place';
+          } else {
+            to = chessCoords;
+            estado = 'selecting';
+            board1.move(`${from}-${to}`);
+          }
         }
         cadena = '';
       }
@@ -57,7 +67,7 @@ function tieneCero(cadenaLimpia) {
   return cadenaLimpia.includes('0');
 }
 
-function moverPieza(cadenaLimpia) {
+function cadenaToChessCoords(cadenaLimpia) {
   const zeroIndex = cadenaLimpia.indexOf('0');
   const x = zeroIndex % ancho;
   const y = Math.floor(zeroIndex / alto);
@@ -70,10 +80,12 @@ function moverPieza(cadenaLimpia) {
     y,
     coorAjedrez,
   });
+
+  return coorAjedrez;
 }
 
 function matrizACoordenadasAjedrez(y, x) {
-  const letrasFilas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const letrasFilas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const numerosColumnas = [8, 7, 6, 5, 4, 3, 2, 1];
   const letraFila = letrasFilas[y];
   const numeroColumna = numerosColumnas[x];
