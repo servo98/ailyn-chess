@@ -105,6 +105,7 @@ function cadenaToChessCoords(cadenaLimpia) {
   return coorAjedrez;
 }
 
+//
 //Convierte posiciones de una matriz a coordenadas de ajedrez
 function matrizACoordenadasAjedrez(x, y) {
   const letrasFilas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
