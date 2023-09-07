@@ -3,6 +3,7 @@ const board1 = Chessboard('board1', 'start');
 const boton = document.getElementById('boton1');
 
 async function readData(port) {
+  console.log('Entrando en el read data');
   while (true) {
     const reader = port.readable.getReader();
     try {
