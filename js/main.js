@@ -16,10 +16,14 @@ botonIniciar.addEventListener('click', async () => {
 
     const reader = port.readable.getReader();
 
+    let cadena = '';
     while (leyendo) {
       const { value, done } = await reader.read();
-      console.log('Entrada');
-      console.log(new TextDecoder().decode(value));
+      cadena += new TextDecoder().decode(value);
+      if (cadenaCompleta(cadena)) {
+        console.log('CADENA completa:', cadena.replace('f', ''));
+        cadena = '';
+      }
       if (done) break;
     }
   } catch (error) {
@@ -31,3 +35,7 @@ botonParar.addEventListener('click', async () => {
   leyendo = false;
   await port.close();
 });
+
+function cadenaCompleta(cadena) {
+  return cadena.split('')[cadena.length - 1] == 'f';
+}
