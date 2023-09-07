@@ -18,6 +18,7 @@ botonIniciar.addEventListener('click', async () => {
 
     while (leyendo) {
       const { value, done } = await reader.read();
+      console.log('Entrada');
       console.log(new TextDecoder().decode(value));
       if (done) break;
     }
