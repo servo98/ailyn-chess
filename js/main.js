@@ -7,6 +7,9 @@ const estadoInput = document.getElementById('estado');
 let leyendo = false;
 let port;
 
+const ancho = 8;
+const alto = 8;
+
 //selecting place
 let estado = 'selecting';
 
@@ -26,7 +29,9 @@ botonIniciar.addEventListener('click', async () => {
       const { value, done } = await reader.read();
       cadena += new TextDecoder().decode(value);
       if (cadenaCompleta(cadena) && tieneCero(cadena)) {
-        console.log('CADENA con cero:', cadena.replace('f', ''));
+        const cadenaLimpia = cadena.replace('f', '');
+        moverPieza(cadenaLimpia);
+        // board.move('e2-e4')
         cadena = '';
       }
       if (done) break;
@@ -48,4 +53,27 @@ function cadenaCompleta(cadena) {
 
 function tieneCero(cadena) {
   return cadena.includes('0');
+}
+
+function moverPieza(cadenaLimpia) {
+  const zeroIndex = cadenaLimpia.indexOf('0');
+  const x = zeroIndex % ancho;
+  const y = Math.floor(zeroIndex / alto);
+
+  const coorAjedrez = matrizACoordenadasAjedrez(y, x);
+
+  console.log({
+    cadenaLimpia,
+    x,
+    y,
+    coorAjedrez,
+  });
+}
+
+function matrizACoordenadasAjedrez(y, x) {
+  const letrasFilas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const letraFila = letrasFilas[y];
+  const numeroColumna = x + 1;
+
+  return letraFila + numeroColumna;
 }
