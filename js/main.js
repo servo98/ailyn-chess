@@ -7,8 +7,8 @@ const estadoInput = document.getElementById('estado');
 let leyendo = false;
 let port;
 
-const ancho = 8;
-const alto = 8;
+const ancho = 3;
+const alto = 3;
 
 //selecting place
 let estado = 'selecting';
