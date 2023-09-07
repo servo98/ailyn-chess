@@ -28,10 +28,12 @@ botonIniciar.addEventListener('click', async () => {
     while (leyendo) {
       const { value, done } = await reader.read();
       cadena += new TextDecoder().decode(value);
-      if (cadenaCompleta(cadena) && tieneCero(cadena)) {
-        const cadenaLimpia = cadena.replace('f', '');
-        moverPieza(cadenaLimpia);
-        // board.move('e2-e4')
+      if (cadenaCompleta(cadena)) {
+        if (tieneCero(cadena)) {
+          const cadenaLimpia = cadena.replace('f', '');
+          moverPieza(cadenaLimpia);
+          // board.move('e2-e4')
+        }
         cadena = '';
       }
       if (done) break;
