@@ -4,12 +4,13 @@ const botonIniciar = document.getElementById('boton1');
 const botonParar = document.getElementById('boton2');
 
 let leyendo = false;
+let port;
 
 botonIniciar.addEventListener('click', async () => {
   try {
     leyendo = true;
     //Ver si está conectado el arduino usb
-    const port = await navigator.serial.requestPort();
+    port = await navigator.serial.requestPort();
 
     await port.open({ baudRate: 9600 });
 
@@ -25,6 +26,7 @@ botonIniciar.addEventListener('click', async () => {
   }
 });
 
-botonParar.addEventListener('click', () => {
+botonParar.addEventListener('click', async () => {
   leyendo = false;
+  await port.close();
 });
