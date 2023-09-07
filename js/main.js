@@ -74,8 +74,9 @@ function moverPieza(cadenaLimpia) {
 
 function matrizACoordenadasAjedrez(y, x) {
   const letrasFilas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const numerosColumnas = [8, 7, 6, 5, 4, 3, 2, 1];
   const letraFila = letrasFilas[y];
-  const numeroColumna = x + 1;
+  const numeroColumna = numerosColumnas[x];
 
   return letraFila + numeroColumna;
 }
