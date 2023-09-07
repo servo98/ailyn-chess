@@ -1,48 +1,30 @@
 const board1 = Chessboard('board1', 'start');
 
-const boton = document.getElementById('boton1');
+const botonIniciar = document.getElementById('boton1');
+const botonParar = document.getElementById('boton2');
 
-async function readData(port) {
-  console.log('Entrando en el read data');
-  while (true) {
-    const reader = port.readable.getReader();
-    try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
-        }
-        // Procesa los datos recibidos, por ejemplo, muestra en la página web
-        console.log('Dato recibido:', value);
-      }
-    } catch (error) {
-      console.error('Error al leer datos del Arduino:', error);
-    } finally {
-      reader.releaseLock();
-    }
-  }
-}
+let leyendo = false;
 
-boton.addEventListener('click', async () => {
+botonIniciar.addEventListener('click', async () => {
   try {
+    leyendo = true;
     //Ver si está conectado el arduino usb
     const port = await navigator.serial.requestPort();
+
     await port.open({ baudRate: 9600 });
-    readData(port);
-    console.log(port);
+
+    const reader = port.readable.getReader();
+
+    while (leyendo) {
+      const { value, done } = await reader.read();
+      console.log(new TextDecoder().decode(value));
+      if (done) break;
+    }
   } catch (error) {
     console.error('ERROR en leer puerto', error);
   }
 });
 
-// async function connectArduino() {
-//   try {
-//     const port = await navigator.serial.requestPort();
-//     await port.open({ baudRate: 9600 }); // Ajusta la velocidad de acuerdo a tu configuración
-//     readData(port);
-//   } catch (error) {
-//     console.error('Error al conectar con el Arduino:', error);
-//   }
-// }
-
-// Lee datos del Arduino
+botonParar.addEventListener('click', () => {
+  leyendo = false;
+});
