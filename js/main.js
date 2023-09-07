@@ -93,7 +93,7 @@ function cadenaToChessCoords(cadenaLimpia) {
   const y = Math.floor(zeroIndex / alto);
 
   //Convertimos esas x, y en notación de ajedrez
-  const coorAjedrez = matrizACoordenadasAjedrez(y, x);
+  const coorAjedrez = matrizACoordenadasAjedrez(x, y);
 
   console.log({
     cadenaLimpia,
@@ -106,11 +106,11 @@ function cadenaToChessCoords(cadenaLimpia) {
 }
 
 //Convierte posiciones de una matriz a coordenadas de ajedrez
-function matrizACoordenadasAjedrez(y, x) {
+function matrizACoordenadasAjedrez(x, y) {
   const letrasFilas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const numerosColumnas = [8, 7, 6, 5, 4, 3, 2, 1];
-  const letraFila = letrasFilas[y];
-  const numeroColumna = numerosColumnas[x];
+  const letraFila = letrasFilas[x];
+  const numeroColumna = numerosColumnas[y];
 
   //concatena letra con número de columna
   return letraFila + numeroColumna;
