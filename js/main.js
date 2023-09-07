@@ -47,12 +47,12 @@ botonParar.addEventListener('click', async () => {
   await port.close();
 });
 
-function cadenaCompleta(cadena) {
-  return cadena.split('')[cadena.length - 1] == 'f';
+function cadenaCompleta(cadenaLimpia) {
+  return cadenaLimpia.split('')[cadenaLimpia.length - 1] == 'f';
 }
 
-function tieneCero(cadena) {
-  return cadena.includes('0');
+function tieneCero(cadenaLimpia) {
+  return cadenaLimpia.includes('0');
 }
 
 function moverPieza(cadenaLimpia) {
