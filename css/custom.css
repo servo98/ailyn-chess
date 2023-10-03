@@ -1,0 +1,61 @@
+/* Estilos para los botones */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  margin-right: 10px; /* Espacio entre botones */
+}
+
+.button:hover {
+  background-color: #2980b9;
+}
+
+/* Estilos para el campo de entrada (input) */
+.input-field {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Cambia el estilo del input cuando está enfocado */
+.input-field:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Colores personalizados */
+.button-primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.button-primary:hover {
+  background-color: #2980b9;
+}
+
+.button-secondary {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.button-secondary:hover {
+  background-color: #c0392b;
+}
+
+/* Otros colores personalizados */
+.input-field-green {
+  border-color: #27ae60;
+}
+
+.input-field-green:focus {
+  border-color: #2ecc71;
+}

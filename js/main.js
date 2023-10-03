@@ -1,10 +1,24 @@
+const config = {
+  draggable: true,
+  position: 'start',
+  pieceTheme: 'img/chesspieces/custom/{piece}.png',
+};
+
 //Constante que contiene el tablero de chessboardjs
-const board1 = Chessboard('board1', 'start');
+const board1 = Chessboard('board1', config);
 
 //Constante que contiene el botón de iniciar
 const botonIniciar = document.getElementById('boton1');
 //Constante que contiene el botón de parar
 const botonParar = document.getElementById('boton2');
+//Boton para cambiar el size de matrix
+const cambiarM = document.getElementById('changeM');
+//inputs que contienen el nuevo ancho y alto de la matriz
+const anchoI = document.getElementById('ancho');
+const altoI = document.getElementById('alto');
+
+//boton para resetear tablero
+const resetB = document.getElementById('reset');
 
 //Constante que contiene el texto si está leyendo o está parado
 /**
@@ -19,8 +33,8 @@ let port;
 /**
  * ancho y alto de mi matriz de botones, próximamente serán los 8x8
  */
-const ancho = 3;
-const alto = 3;
+let ancho = anchoI.value;
+let alto = altoI.value;
 
 //Estados válidos del juego "selecting" "place" para saber si estoy levantando la pieza o la estoy colocando
 //
@@ -73,6 +87,15 @@ botonParar.addEventListener('click', async () => {
   estadoInput.value = 'parado';
   await port.close();
 });
+
+cambiarM.addEventListener('click', () => {
+  ancho = anchoI.value;
+  alto = altoI.value;
+  console.log('Cambiando ancho y alto de matriz', ancho, alto);
+});
+
+//chessboardjs tiene una funcion (board1.start) que resetea la pos de las fichas
+resetB.addEventListener('click', board1.start);
 
 function cadenaCompleta(cadenaLimpia) {
   return cadenaLimpia.split('')[cadenaLimpia.length - 1] == 'f';

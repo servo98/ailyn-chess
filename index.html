@@ -5,16 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title</title>
     <link rel="stylesheet" href="./css/chessboard-1.0.0.css" />
+    <link rel="stylesheet" href="./css/custom.css" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
       <div id="board1" style="width: 400px"></div>
+
+      <button id="reset">Reset</button>
       <button id="boton1">Leer</button>
       <button id="boton2">Parar</button>
 
-
-      <p>Estado:</p>
+      <br>
+      <br>
+      <label>Estado:</label>
       <input id="estado" type="text">
+      <br>
+      <br>
+      <label>Ancho:</label>
+      <input id="ancho" type="number" min="1" max="8" step="1" value="3">
+      <label>Alto:</label>
+      <!-- valores default 3 -->
+      <input id="alto" type="number" min="1" max="8" step="1" value="3">
+      <br>
+      <button id="changeM">Cambiar matriz</button>
 
 
 
