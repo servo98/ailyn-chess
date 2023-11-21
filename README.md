@@ -81,3 +81,11 @@ npm run website
 [chess.js]:https://github.com/jhlywa/chess.js
 [Example 5000]:http://chessboardjs.com/examples#5000
 # ailyn-chess
+
+TODO:
+
+al seleccionar ficha highlight valid movements
+poner música
+nombre de jugadores
+
+

@@ -1,3 +1,7 @@
+body {
+  background-color: rgba(76, 76, 76, 0.525);
+}
+
 /* Estilos para los botones */
 .button {
   display: inline-block;

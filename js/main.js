@@ -41,6 +41,10 @@ let alto = altoI.value;
 let estado = 'selecting';
 let from = '';
 let to = '';
+let cadena = '';
+let reader = null;
+
+const ESTADOS_JUEGO = ['INICIANDO', 'JUGADOR1', 'JUGADOR2', 'TERMINADO'];
 
 botonIniciar.addEventListener('click', async () => {
   estadoInput.value = 'leyendo';
@@ -51,9 +55,8 @@ botonIniciar.addEventListener('click', async () => {
 
     await port.open({ baudRate: 9600 });
 
-    const reader = port.readable.getReader();
+    reader = port.readable.getReader();
 
-    let cadena = '';
     while (leyendo) {
       const { value, done } = await reader.read();
       cadena += new TextDecoder().decode(value);
@@ -85,6 +88,7 @@ botonIniciar.addEventListener('click', async () => {
 botonParar.addEventListener('click', async () => {
   leyendo = false;
   estadoInput.value = 'parado';
+  reader.cancel();
   await port.close();
 });
 
@@ -95,7 +99,9 @@ cambiarM.addEventListener('click', () => {
 });
 
 //chessboardjs tiene una funcion (board1.start) que resetea la pos de las fichas
-resetB.addEventListener('click', board1.start);
+resetB.addEventListener('click', () => {
+  board1.start();
+});
 
 function cadenaCompleta(cadenaLimpia) {
   return cadenaLimpia.split('')[cadenaLimpia.length - 1] == 'f';
