@@ -1,69 +1,103 @@
 body {
   background-color: rgba(76, 76, 76, 0.525);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ajusta la altura del cuerpo al 100% de la ventana visible */
 }
 
 .validM {
   background-color: #28a51e87;
 }
 
-/* Estilos para los botones */
-.button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+@font-face {
+  font-family: 'Magical Childhood';
+  src: url('../font/Magical Childhood.otf') format('woff');
+}
+.title {
+  font-family: 'Magical Childhood', sans-serif;
   text-align: center;
-  text-decoration: none;
-  margin-right: 10px; /* Espacio entre botones */
 }
 
-.button:hover {
-  background-color: #2980b9;
+#board1 {
+  width: 400px;
+  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
 }
 
-/* Estilos para el campo de entrada (input) */
-.input-field {
-  padding: 10px;
-  border: 1px solid #ccc;
+.btn {
+  width: 6.5em;
+  height: 2.3em;
+  margin: 0.5em;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 0.625em;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+button:hover {
+  color: black;
+}
+
+button:after {
+  content: '';
+  background: white;
+  position: absolute;
+  z-index: -1;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  bottom: 0;
+  transform: skewX(-45deg) scale(0, 1);
+  transition: all 0.5s;
+}
+
+button:hover:after {
+  transform: skewX(-45deg) scale(1, 1);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.input {
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --main-color: #323232;
+  width: 200px;
+  height: 40px;
   border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Cambia el estilo del input cuando está enfocado */
-.input-field:focus {
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-/* Colores personalizados */
-.button-primary {
-  background-color: #3498db;
-  color: #fff;
+.contenedor {
+  display: flex;
 }
 
-.button-primary:hover {
-  background-color: #2980b9;
+.botones {
+  flex: 1;
 }
 
-.button-secondary {
-  background-color: #e74c3c;
-  color: #fff;
+.texto {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.button-secondary:hover {
-  background-color: #c0392b;
-}
-
-/* Otros colores personalizados */
-.input-field-green {
-  border-color: #27ae60;
-}
-
-.input-field-green:focus {
-  border-color: #2ecc71;
+.texto input {
+  width: 80%; /* Ajusta el ancho del input según tus necesidades */
+  padding: 10px; /* Ajusta el relleno del input según tus necesidades */
 }

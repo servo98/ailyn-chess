@@ -2,25 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title</title>
     <link rel="stylesheet" href="./css/chessboard-1.0.0.css" />
     <link rel="stylesheet" href="./css/custom.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
+      <h1 class="title">AJEDRÉZ</h1>
       <div id="board1" style="width: 400px"></div>
-
-      <button id="reset">Reset</button>
-      <button id="boton1">Leer</button>
-      <button id="boton2">Parar</button>
-      <button id="test">TEST</button>
-
       <br>
-      <br>
-      <label>Estado:</label>
-      <input id="estado" type="text">
+      <div class="contenedor">
+        <div class="botones">
+          <button class="btn" id="reset">Reset</button>
+          <button class="btn" id="boton1">Leer</button>
+          <button class="btn" id="boton2">Parar</button>
+          <button class="btn" id="test">TEST</button>
+        </div>
+        <div class="texto"> 
+          <input id="estado" class="input" type="text" readonly>
+        </div>
+      </div>
+      
+
 
 
     <script src="./js/jquery.js" ></script>

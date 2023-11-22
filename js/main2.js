@@ -27,7 +27,7 @@ game.put({ type: 'b', color: 'b' }, 'f8');
 game.put({ type: 'n', color: 'b' }, 'g8');
 game.put({ type: 'r', color: 'b' }, 'h8');
 
-const board1 = Chessboard('board1', config);
+let board1 = Chessboard('board1', config);
 
 const test = document.getElementById('test');
 
@@ -174,7 +174,29 @@ botonParar.addEventListener('click', async () => {
 });
 
 resetB.addEventListener('click', () => {
-  board1.start();
+  board1 = Chessboard('board1', config);
+
+  // Elimina los peones del tablero
+  game.clear();
+
+  // Coloca las piezas restantes en la posición inicial (sin peones)
+  game.put({ type: 'r', color: 'w' }, 'a1');
+  game.put({ type: 'n', color: 'w' }, 'b1');
+  game.put({ type: 'b', color: 'w' }, 'c1');
+  game.put({ type: 'q', color: 'w' }, 'd1');
+  game.put({ type: 'k', color: 'w' }, 'e1');
+  game.put({ type: 'b', color: 'w' }, 'f1');
+  game.put({ type: 'n', color: 'w' }, 'g1');
+  game.put({ type: 'r', color: 'w' }, 'h1');
+
+  game.put({ type: 'r', color: 'b' }, 'a8');
+  game.put({ type: 'n', color: 'b' }, 'b8');
+  game.put({ type: 'b', color: 'b' }, 'c8');
+  game.put({ type: 'q', color: 'b' }, 'd8');
+  game.put({ type: 'k', color: 'b' }, 'e8');
+  game.put({ type: 'b', color: 'b' }, 'f8');
+  game.put({ type: 'n', color: 'b' }, 'g8');
+  game.put({ type: 'r', color: 'b' }, 'h8');
 });
 
 function cadenaCompleta(cadenaLimpiat) {
