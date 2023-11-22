@@ -1,10 +1,31 @@
 const config = {
   draggable: true,
-  position: 'start',
+  position: 'rnbqkbnr/8/8/8/8/8/8/RNBQKBNR',
   pieceTheme: 'img/chesspieces/custom/{piece}.png',
 };
 
 const game = new Chess();
+// Elimina los peones del tablero
+game.clear();
+
+// Coloca las piezas restantes en la posición inicial (sin peones)
+game.put({ type: 'r', color: 'w' }, 'a1');
+game.put({ type: 'n', color: 'w' }, 'b1');
+game.put({ type: 'b', color: 'w' }, 'c1');
+game.put({ type: 'q', color: 'w' }, 'd1');
+game.put({ type: 'k', color: 'w' }, 'e1');
+game.put({ type: 'b', color: 'w' }, 'f1');
+game.put({ type: 'n', color: 'w' }, 'g1');
+game.put({ type: 'r', color: 'w' }, 'h1');
+
+game.put({ type: 'r', color: 'b' }, 'a8');
+game.put({ type: 'n', color: 'b' }, 'b8');
+game.put({ type: 'b', color: 'b' }, 'c8');
+game.put({ type: 'q', color: 'b' }, 'd8');
+game.put({ type: 'k', color: 'b' }, 'e8');
+game.put({ type: 'b', color: 'b' }, 'f8');
+game.put({ type: 'n', color: 'b' }, 'g8');
+game.put({ type: 'r', color: 'b' }, 'h8');
 
 const board1 = Chessboard('board1', config);
 
@@ -16,6 +37,7 @@ const botonParar = document.getElementById('boton2');
 const resetB = document.getElementById('reset');
 
 const estadoInput = document.getElementById('estado');
+estadoInput.value = 'Clic en Leer';
 
 const highlight1 = 'highlight1-32417';
 
@@ -27,7 +49,7 @@ let alto = 8;
 
 let reader = null;
 let anteriorCadena =
-  '0000000000000000111111111111111111111111111111110000000000000000';
+  '0000000011111111111111111111111111111111111111111111111100000000';
 
 const GAME_STATES = {
   WHITE_SELECTING: 'WHITE_SELECTING',
@@ -52,7 +74,7 @@ test.addEventListener('click', () => {
 });
 
 botonIniciar.addEventListener('click', async () => {
-  estadoInput.value = 'leyendo';
+  estadoInput.value = 'Turno Blancas';
   try {
     leyendo = true;
     port = await navigator.serial.requestPort();
@@ -64,12 +86,17 @@ botonIniciar.addEventListener('click', async () => {
     while (leyendo) {
       const { value, done } = await reader.read();
       cadena += new TextDecoder().decode(value);
+
       if (cadenaCompleta(cadena)) {
-        const cadenaLimpia = cadena.replace('f', '');
+        console.log(`ESTADO: ${currentState}`);
+        cadena = cadenaLimpia(cadena);
         //TODO
-        const diffIndex = indexDeCambio(anteriorCadena, cadenaLimpia);
-        const coords = indexToChessCoords(diffIndex);
-        console.log(`ESTADO: ${currentState}, index: ${diffIndex}`);
+        const cambio = indexDeCambio(anteriorCadena, cadena);
+        cadena = '';
+        if (cambio.index == -1) {
+          continue;
+        }
+        const coords = indexToChessCoords(cambio.index);
         switch (currentState) {
           case GAME_STATES['WHITE_SELECTING']: {
             from = coords;
@@ -77,43 +104,60 @@ botonIniciar.addEventListener('click', async () => {
             highlightValid(from);
             console.log('Blanca seleccionada', from);
             currentState = GAME_STATES['WHITE_PLACING'];
+            cambiarLed(from, 1);
             break;
           }
           case GAME_STATES['WHITE_PLACING']: {
-            to = coords;
-            tooglehighlightSquare(from);
-            console.log(`Moviendo blanca: ${from}-${to}`);
-            board1.move(`${from}-${to}`);
-            game.move({
-              from,
-              to,
-              promotion: 'q',
-            });
-            currentState = GAME_STATES['BLACK_SELECTING'];
+            if (cambio.tipo == 'quitar') {
+              console.log('Comió!!!!!!!!!!');
+            } else {
+              to = coords;
+              tooglehighlightSquare(from);
+              highlightValid(from);
+              console.log(`Moviendo blanca: ${from}-${to}`);
+              board1.move(`${from}-${to}`);
+              game.move({
+                from,
+                to,
+                promotion: 'q',
+              });
+              currentState = GAME_STATES['BLACK_SELECTING'];
+              cambiarLed(from, 0);
+            }
+
             break;
           }
           case GAME_STATES['BLACK_SELECTING']: {
             from = coords;
             tooglehighlightSquare(from);
+            highlightValid(from);
             console.log('Negra seleccionada', from);
             currentState = GAME_STATES['BLACK_PLACING'];
+            cambiarLed(from, 1);
             break;
           }
           case GAME_STATES['BLACK_PLACING']: {
-            to = coords;
-            tooglehighlightSquare(from);
-            console.log(`Moviendo negra: ${from}-${to}`);
-            board1.move(`${from}-${to}`);
-            game.move({
-              from,
-              to,
-              promotion: 'q',
-            });
-            currentState = GAME_STATES['WHITE_SELECTING'];
+            if (cambio.tipo == 'quitar') {
+              console.log('Comió!!!!!!!!!!');
+            } else {
+              to = coords;
+              tooglehighlightSquare(from);
+              highlightValid(from);
+              console.log(`Moviendo blanca: ${from}-${to}`);
+              board1.move(`${from}-${to}`);
+              game.move({
+                from,
+                to,
+                promotion: 'q',
+              });
+              currentState = GAME_STATES['WHITE_SELECTING'];
+              cambiarLed(from, 0);
+            }
+
             break;
           }
         }
-        cadena = '';
+        estadoInput.value = getEstado();
       }
       if (done) break;
     }
@@ -133,8 +177,13 @@ resetB.addEventListener('click', () => {
   board1.start();
 });
 
-function cadenaCompleta(cadenaLimpia) {
-  return cadenaLimpia.split('')[cadenaLimpia.length - 1] == 'f';
+function cadenaCompleta(cadenaLimpiat) {
+  return cadenaLimpiat.split('')[cadenaLimpiat.length - 1] == 'f';
+}
+
+function cadenaLimpia(cadenaT) {
+  console.log('ACA', cadenaT);
+  return cadenaT.replace(/[^01]/g, '').replace('f', '');
 }
 
 function tieneCero(cadenaLimpia) {
@@ -162,22 +211,77 @@ function indexDeCambio(cadena1, cadena2) {
   for (let i = 0; i < cadena1.length; i++) {
     if (cadena1[i] !== cadena2[i]) {
       anteriorCadena = cadena2;
-      return i;
+      // 0 -> 1 = Quitar
+      // 1 -> 0 = Pusieron
+      let cambio = cadena1[i] == '0' ? 'quitar' : 'poner';
+      return {
+        tipo: cambio,
+        index: i,
+      };
     }
   }
   console.log('iguales');
-  return -1;
+  return {
+    index: -1,
+    tipo: null,
+  };
 }
 
 function tooglehighlightSquare(coord) {
   const square = document.getElementsByClassName(`square-${coord}`)[0];
   square.classList.toggle(highlight1);
+  //TODO prender o apagar led seleccionado
 }
 
 function highlightValid(coord) {
-  const moves = game.moves({
+  console.log('Calculando movs de', coord);
+  console.log(game.ascii());
+  let moves = game.moves({
     square: coord,
     verbose: true,
   });
-  console.log(moves);
+
+  moves = moves.map((move) => move.to);
+
+  const squares = moves.map((coord) => {
+    return document.getElementsByClassName(`square-${coord}`)[0];
+  });
+
+  squares.forEach((element) => {
+    element.classList.toggle('validM');
+  });
+
+  console.log('moves:', moves);
+}
+
+function getEstado() {
+  if (game.in_checkmate()) {
+    return 'Jaque Mate';
+  }
+  return currentState.split('_')[0] == 'WHITE'
+    ? 'Turno Blancas'
+    : 'Turno Negras';
+}
+
+async function cambiarLed(coords, estado) {
+  const writer = port.writable.getWriter();
+
+  const leds = coordToLeds(coords);
+  console.log('COORDENADAS', coords);
+  console.log('LEDS', leds, 'en', estado);
+  // Envía los dos enteros al Arduino separados por una coma
+  await writer.write(
+    new TextEncoder().encode(`${estado},${leds[0]},${leds[1]}\n`)
+  );
+
+  // Cierra la conexión
+  writer.releaseLock();
+}
+
+function coordToLeds(coord) {
+  const letras = ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
+  const [letra, numero] = coord.split('');
+  x = letras.indexOf(letra);
+  y = +numero + 7;
+  return [x, y];
 }
