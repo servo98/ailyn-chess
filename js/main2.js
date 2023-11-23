@@ -1,7 +1,13 @@
+const music = document.getElementById('music');
+const nam = document.getElementById('nam');
+
 const config = {
   draggable: true,
   position: 'rnbqkbnr/8/8/8/8/8/8/RNBQKBNR',
   pieceTheme: 'img/chesspieces/custom/{piece}.png',
+  onChange: () => {
+    nam.play();
+  },
 };
 
 const game = new Chess();
@@ -69,11 +75,23 @@ let to = '';
  * 4.- black_place
  */
 
+let isMuted = true;
+
 test.addEventListener('click', () => {
-  console.log(game.ascii());
+  isMuted = !isMuted;
+  if (isMuted) {
+    music.play();
+    test.innerText = '🔊';
+  } else {
+    music.pause();
+    test.innerText = '🔇';
+  }
+  // console.log(game.ascii());
+  // board1.move('a1-a2');
 });
 
 botonIniciar.addEventListener('click', async () => {
+  music.play();
   estadoInput.value = 'Turno Blancas';
   try {
     leyendo = true;
