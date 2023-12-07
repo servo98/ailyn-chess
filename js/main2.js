@@ -3,35 +3,36 @@ const nam = document.getElementById('nam');
 
 const config = {
   draggable: true,
-  position: 'rnbqkbnr/8/8/8/8/8/8/RNBQKBNR',
+  position: 'start',
+  // position: 'rnbqkbnr/8/8/8/8/8/8/RNBQKBNR',
   pieceTheme: 'img/chesspieces/custom/{piece}.png',
   onChange: () => {
     nam.play();
   },
 };
 
-const game = new Chess();
+let game = new Chess();
 // Elimina los peones del tablero
-game.clear();
+// game.clear();
 
-// Coloca las piezas restantes en la posición inicial (sin peones)
-game.put({ type: 'r', color: 'w' }, 'a1');
-game.put({ type: 'n', color: 'w' }, 'b1');
-game.put({ type: 'b', color: 'w' }, 'c1');
-game.put({ type: 'q', color: 'w' }, 'd1');
-game.put({ type: 'k', color: 'w' }, 'e1');
-game.put({ type: 'b', color: 'w' }, 'f1');
-game.put({ type: 'n', color: 'w' }, 'g1');
-game.put({ type: 'r', color: 'w' }, 'h1');
+// // Coloca las piezas restantes en la posición inicial (sin peones)
+// game.put({ type: 'r', color: 'w' }, 'a1');
+// game.put({ type: 'n', color: 'w' }, 'b1');
+// game.put({ type: 'b', color: 'w' }, 'c1');
+// game.put({ type: 'q', color: 'w' }, 'd1');
+// game.put({ type: 'k', color: 'w' }, 'e1');
+// game.put({ type: 'b', color: 'w' }, 'f1');
+// game.put({ type: 'n', color: 'w' }, 'g1');
+// game.put({ type: 'r', color: 'w' }, 'h1');
 
-game.put({ type: 'r', color: 'b' }, 'a8');
-game.put({ type: 'n', color: 'b' }, 'b8');
-game.put({ type: 'b', color: 'b' }, 'c8');
-game.put({ type: 'q', color: 'b' }, 'd8');
-game.put({ type: 'k', color: 'b' }, 'e8');
-game.put({ type: 'b', color: 'b' }, 'f8');
-game.put({ type: 'n', color: 'b' }, 'g8');
-game.put({ type: 'r', color: 'b' }, 'h8');
+// game.put({ type: 'r', color: 'b' }, 'a8');
+// game.put({ type: 'n', color: 'b' }, 'b8');
+// game.put({ type: 'b', color: 'b' }, 'c8');
+// game.put({ type: 'q', color: 'b' }, 'd8');
+// game.put({ type: 'k', color: 'b' }, 'e8');
+// game.put({ type: 'b', color: 'b' }, 'f8');
+// game.put({ type: 'n', color: 'b' }, 'g8');
+// game.put({ type: 'r', color: 'b' }, 'h8');
 
 let board1 = Chessboard('board1', config);
 
@@ -55,7 +56,7 @@ let alto = 8;
 
 let reader = null;
 let anteriorCadena =
-  '0000000011111111111111111111111111111111111111111111111100000000';
+  '0000000000000000111111111111111111111111111111110000000000000000';
 
 const GAME_STATES = {
   WHITE_SELECTING: 'WHITE_SELECTING',
@@ -193,28 +194,28 @@ botonParar.addEventListener('click', async () => {
 
 resetB.addEventListener('click', () => {
   board1 = Chessboard('board1', config);
-
+  game = new Chess();
   // Elimina los peones del tablero
-  game.clear();
+  // game.clear();
 
-  // Coloca las piezas restantes en la posición inicial (sin peones)
-  game.put({ type: 'r', color: 'w' }, 'a1');
-  game.put({ type: 'n', color: 'w' }, 'b1');
-  game.put({ type: 'b', color: 'w' }, 'c1');
-  game.put({ type: 'q', color: 'w' }, 'd1');
-  game.put({ type: 'k', color: 'w' }, 'e1');
-  game.put({ type: 'b', color: 'w' }, 'f1');
-  game.put({ type: 'n', color: 'w' }, 'g1');
-  game.put({ type: 'r', color: 'w' }, 'h1');
+  // // Coloca las piezas restantes en la posición inicial (sin peones)
+  // game.put({ type: 'r', color: 'w' }, 'a1');
+  // game.put({ type: 'n', color: 'w' }, 'b1');
+  // game.put({ type: 'b', color: 'w' }, 'c1');
+  // game.put({ type: 'q', color: 'w' }, 'd1');
+  // game.put({ type: 'k', color: 'w' }, 'e1');
+  // game.put({ type: 'b', color: 'w' }, 'f1');
+  // game.put({ type: 'n', color: 'w' }, 'g1');
+  // game.put({ type: 'r', color: 'w' }, 'h1');
 
-  game.put({ type: 'r', color: 'b' }, 'a8');
-  game.put({ type: 'n', color: 'b' }, 'b8');
-  game.put({ type: 'b', color: 'b' }, 'c8');
-  game.put({ type: 'q', color: 'b' }, 'd8');
-  game.put({ type: 'k', color: 'b' }, 'e8');
-  game.put({ type: 'b', color: 'b' }, 'f8');
-  game.put({ type: 'n', color: 'b' }, 'g8');
-  game.put({ type: 'r', color: 'b' }, 'h8');
+  // game.put({ type: 'r', color: 'b' }, 'a8');
+  // game.put({ type: 'n', color: 'b' }, 'b8');
+  // game.put({ type: 'b', color: 'b' }, 'c8');
+  // game.put({ type: 'q', color: 'b' }, 'd8');
+  // game.put({ type: 'k', color: 'b' }, 'e8');
+  // game.put({ type: 'b', color: 'b' }, 'f8');
+  // game.put({ type: 'n', color: 'b' }, 'g8');
+  // game.put({ type: 'r', color: 'b' }, 'h8');
 });
 
 function cadenaCompleta(cadenaLimpiat) {
